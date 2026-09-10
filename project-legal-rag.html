@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LegalDoc RAG System — Ahmed Farouk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-color:#0a0a0a; --card-bg:rgba(255,255,255,0.03); --accent-cyan:#00f3ff; --accent-purple:#bc13fe; --text-main:#e0e0e0; --text-muted:#8a8a8a; }
+        body { background-color:var(--bg-color); color:var(--text-main); font-family:'Inter',sans-serif; }
+        .mono { font-family:'JetBrains Mono',monospace; }
+        .grid-bg { background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:40px 40px; position:fixed; inset:0; z-index:-1; }
+        .glow-bg { background:radial-gradient(circle at 50% 0%,rgba(188,19,254,0.12),transparent 60%); position:fixed; inset:0; z-index:-1; }
+        .glass-card { background:var(--card-bg); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.05); }
+        .terminal-header { border-bottom:1px solid rgba(255,255,255,0.1); }
+        .dot { width:10px; height:10px; border-radius:50%; }
+        .gradient-text { background:linear-gradient(90deg,var(--accent-cyan),var(--accent-purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .step-line { width:2px; background:linear-gradient(to bottom,var(--accent-purple),var(--accent-cyan)); }
+        .step-dot { width:14px; height:14px; border-radius:50%; border:2px solid var(--accent-cyan); background:var(--bg-color); }
+        ::-webkit-scrollbar { width:8px; } ::-webkit-scrollbar-track { background:var(--bg-color); } ::-webkit-scrollbar-thumb { background:var(--accent-purple); border-radius:4px; }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="glow-bg"></div>
+
+    <nav class="fixed top-0 w-full z-50 backdrop-blur-md bg-black/30 border-b border-white/5">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="mono text-xl font-bold gradient-text">root@ahmed_ai:~$</a>
+            <a href="index.html#projects" class="mono text-sm text-[var(--text-muted)] hover:text-white transition">← _back_to_projects</a>
+        </div>
+    </nav>
+
+    <header class="pt-32 pb-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="mono text-[var(--accent-purple)] text-sm mb-4">PROJECT_001 // NLP</div>
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-6">LegalDoc RAG System</h1>
+            <p class="text-xl text-[var(--text-muted)] max-w-3xl leading-relaxed">
+                A Retrieval-Augmented Generation pipeline that transforms how legal teams review contracts and case files — reducing review time by 60% with AI-powered document intelligence.
+            </p>
+            <div class="flex flex-wrap gap-3 mt-8 mono text-sm">
+                <span class="px-3 py-1 border border-[var(--accent-purple)] text-[var(--accent-purple)] rounded">Python</span>
+                <span class="px-3 py-1 border border-[var(--accent-purple)] text-[var(--accent-purple)] rounded">LangChain</span>
+                <span class="px-3 py-1 border border-[var(--accent-purple)] text-[var(--accent-purple)] rounded">Pinecone</span>
+                <span class="px-3 py-1 border border-[var(--accent-purple)] text-[var(--accent-purple)] rounded">LLaMA-3</span>
+                <span class="px-3 py-1 border border-[var(--accent-purple)] text-[var(--accent-purple)] rounded">FastAPI</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Metrics -->
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="glass-card rounded-lg p-6 text-center">
+                <div class="text-3xl font-extrabold gradient-text">60%</div>
+                <div class="mono text-xs text-[var(--text-muted)] mt-2">Faster Review Time</div>
+            </div>
+            <div class="glass-card rounded-lg p-6 text-center">
+                <div class="text-3xl font-extrabold gradient-text">15K+</div>
+                <div class="mono text-xs text-[var(--text-muted)] mt-2">Documents Indexed</div>
+            </div>
+            <div class="glass-card rounded-lg p-6 text-center">
+                <div class="text-3xl font-extrabold gradient-text">2.1s</div>
+                <div class="mono text-xs text-[var(--text-muted)] mt-2">Avg Query Latency</div>
+            </div>
+            <div class="glass-card rounded-lg p-6 text-center">
+                <div class="text-3xl font-extrabold gradient-text">96%</div>
+                <div class="mono text-xs text-[var(--text-muted)] mt-2">Relevance Score</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture -->
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12">_system_architecture</h2>
+            <div class="glass-card rounded-lg overflow-hidden">
+                <div class="terminal-header flex items-center space-x-2 px-4 py-3 bg-black/40">
+                    <div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div>
+                    <span class="mono text-xs text-[var(--text-muted)] ml-2">pipeline_diagram.txt</span>
+                </div>
+                <div class="p-8 mono text-sm leading-loose text-center">
+                    <span class="text-green-400">[PDF/DOCX Input]</span> → <span class="text-[var(--accent-cyan)]">Chunker</span> → <span class="text-[var(--accent-cyan)]">Embedder</span><br><br>
+                    ↓ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↓<br><br>
+                    <span class="text-[var(--accent-purple)]">[Pinecone Vector DB]</span> &nbsp;&nbsp;&nbsp; <span class="text-[var(--accent-purple)]">[User Query]</span><br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↓ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↓<br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="text-[var(--accent-cyan)]">Semantic Search</span> → <span class="text-green-400">[Top-K Context]</span><br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↓<br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="text-green-400">[Fine-tuned LLaMA-3 Generator]</span> → <span class="text-white font-bold">Answer + Citations</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process -->
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12">_build_process</h2>
+            <div class="space-y-12">
+                <div class="flex gap-6">
+                    <div class="flex flex-col items-center"><div class="step-dot"></div><div class="step-line flex-1 mt-2"></div></div>
+                    <div class="pb-8"><h3 class="text-xl font-bold text-white mb-2">Document Ingestion & Preprocessing</h3><p class="text-[var(--text-muted)]">Built custom PDF/DOCX parsers that handle complex legal formatting — tables, footnotes, multi-column layouts. Documents are cleaned, deduplicated, and split into semantic chunks using recursive character splitting with overlap.</p></div>
+                </div>
+                <div class="flex gap-6">
+                    <div class="flex flex-col items-center"><div class="step-dot"></div><div class="step-line flex-1 mt-2"></div></div>
+                    <div class="pb-8"><h3 class="text-xl font-bold text-white mb-2">Embedding & Vector Indexing</h3><p class="text-[var(--text-muted)]">Used OpenAI's text-embedding-3-large model to create 3072-dimensional vectors. Indexed in Pinecone with metadata filtering for document type, jurisdiction, and date — enabling hybrid search.</p></div>
+                </div>
+                <div class="flex gap-6">
+                    <div class="flex flex-col items-center"><div class="step-dot"></div><div class="step-line flex-1 mt-2"></div></div>
+                    <div class="pb-8"><h3 class="text-xl font-bold text-white mb-2">LLaMA-3 Fine-Tuning</h3><p class="text-[var(--text-muted)]">Fine-tuned LLaMA-3-8B on 2,000 expert-annotated legal Q&A pairs using QLoRA (4-bit quantization). Trained on 2x A100 GPUs for 3 epochs with a custom loss function that penalizes hallucinated citations.</p></div>
+                </div>
+                <div class="flex gap-6">
+                    <div class="flex flex-col items-center"><div class="step-dot"></div></div>
+                    <div><h3 class="text-xl font-bold text-white mb-2">API Deployment & Monitoring</h3><p class="text-[var(--text-muted)]">Wrapped in FastAPI with async request handling, response caching in Redis, and a Streamlit dashboard for non-technical users. Integrated LangSmith for tracing every retrieval and generation step.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Snippet -->
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8">_core_logic</h2>
+            <div class="glass-card rounded-lg overflow-hidden">
+                <div class="terminal-header flex items-center space-x-2 px-4 py-3 bg-black/40">
+                    <div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div>
+                    <span class="mono text-xs text-[var(--text-muted)] ml-2">rag_pipeline.py</span>
+                </div>
+                <pre class="p-6 mono text-sm leading-relaxed overflow-x-auto"><code><span class="text-[var(--accent-purple)]">from</span> <span class="text-[var(--accent-cyan)]">langchain.vectorstores</span> <span class="text-[var(--accent-purple)]">import</span> Pinecone
+<span class="text-[var(--accent-purple)]">from</span> <span class="text-[var(--accent-cyan)]">langchain.chains</span> <span class="text-[var(--accent-purple)]">import</span> RetrievalQA
+<span class="text-[var(--accent-purple)]">from</span> <span class="text-[var(--accent-cyan)]">langchain.llms</span> <span class="text-[var(--accent-purple)]">import</span> HuggingFacePipeline
+
+<span class="text-[var(--accent-purple)]">def</span> <span class="text-white">build_rag_chain</span>(index_name, llm_model):
+    <span class="text-[var(--text-muted)]"># Initialize vector store with metadata filtering</span>
+    vectorstore = Pinecone.from_existing_index(
+        index_name=index_name,
+        embedding=embeddings,
+        text_key=<span class="text-green-400">"text"</span>
+    )
+    
+    <span class="text-[var(--text-muted)]"># Custom retriever with re-ranking</span>
+    retriever = vectorstore.as_retriever(
+        search_type=<span class="text-green-400">"mmr"</span>,
+        search_kwargs={<span class="text-green-400">"k"</span>: <span class="text-orange-400">8</span>, <span class="text-green-400">"fetch_k"</span>: <span class="text-orange-400">30</span>}
+    )
+    
+    <span class="text-[var(--text-muted)]"># Build chain with citation enforcement</span>
+    chain = RetrievalQA.from_chain_type(
+        llm=llm_model,
+        retriever=retriever,
+        return_source_documents=<span class="text-orange-400">True</span>
+    )
+    <span class="text-[var(--accent-purple)]">return</span> chain</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="py-16 px-6 border-t border-white/5">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="index.html#projects" class="mono text-sm text-[var(--text-muted)] hover:text-white transition">← All Projects</a>
+            <a href="project-anomaly-detection.html" class="mono text-sm text-[var(--accent-cyan)] hover:opacity-80 transition">Next: Anomaly Detection →</a>
+        </div>
+    </section>
+
+    <footer class="py-8 px-6 border-t border-white/5">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="text-xs text-[var(--text-muted)] mono">© 2024 Ahmed Farouk. All neural pathways reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Anomaly Detection — Ahmed Farouk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-color:#0a0a0a; --card-bg:rgba(255,255,255,0.03); --accent-cyan:#00f3ff; --accent-purple:#bc13fe; --text-main:#e0e0e0; --text-muted:#8a8a8a; }
+        body { background-color:var(--bg-color); color:var(--text-main); font-family:'Inter',sans-serif; }
+        .mono { font-family:'JetBrains Mono',monospace; }
+        .grid-bg { background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:40px 40px; position:fixed; inset:0; z-index:-1; }
+        .glow-bg { background:radial-gradient(circle at 50% 0%,rgba(0,243,255,0.1),transparent 60%); position:fixed; inset:0; z-index:-1; }
+        .glass-card { background:var(--card-bg); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.05); }
+        .terminal-header { border-bottom:1px solid rgba(255,255,255,0.1); }
+        .dot { width:10px; height:10px; border-radius:50%; }
+        .gradient-text { background:linear-gradient(90deg,var(--accent-cyan),var(--accent-purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .step-line { width:2px; background:linear-gradient(to bottom,var(--accent-cyan),var(--accent-purple)); }
+        .step-dot { width:14px; height:14px; border-radius:50%; border:2px solid var(--accent-cyan); background:var(--bg-color); }
+        ::-webkit-scrollbar { width:8px; } ::-webkit-scrollbar-track { background:var(--bg-color); } ::-webkit-scrollbar-thumb { background:var(--accent-purple); border-radius:4px; }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="glow-bg"></div>
+
+    <nav class="fixed top-0 w-full z-50 backdrop-blur-md bg-black/30 border-b border-white/5">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="mono text-xl font-bold gradient-text">root@ahmed_ai:~$</a>
+            <a href="index.html#projects" class="mono text-sm text-[var(--text-muted)] hover:text-white transition">← _back_to_projects</a>
+        </div>
+    </nav>
+
+    <header class="pt-32 pb-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="mono text-[var(--accent-cyan)] text-sm mb-4">PROJECT_002 // COMPUTER VISION</div>
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-6">Real-Time Anomaly Detection</h1>
+            <p class="text-xl text-[var(--text-muted)] max-w-3xl leading-relaxed">
+                Edge-deployed YOLOv8 model running on NVIDIA Jetson Nano that inspects manufactured parts at 60 FPS — catching defects human inspectors miss 23% of the time.
+            </p>
+            <div class="flex flex-wrap gap-3 mt-8 mono text-sm">
+                <span class="px-3 py-1 border border-[var(--accent-cyan)] text-[var(--accent-cyan)] rounded">PyTorch</span>
+                <span class="px-3 py-1 border border-[var(--accent-cyan)] text-[var(--accent-cyan)] rounded">YOLOv8</span>
+                <span class="px-3 py-1 border border-[var(--accent-cyan)] text-[var(--accent-cyan)] rounded">TensorRT</span>
+                <span class="px-3 py-1 border border-[var(--accent-cyan)] text-[var(--accent-cyan)] rounded">OpenCV</span>
+                <span class="px-3 py-1 border border-[var(--accent-cyan)] text-[var(--accent-cyan)] rounded">C++</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="glass-card rounded-lg p-6 text-center">
+                <div class="text-3xl font-extrabold gradient-text">94%</div>
+                <div class="mono text-xs text-[var(--text-muted)] mt-2">mAP@0.5</div>
+            </div>
+            <div class="glass-card rounded-lg p-6 text-center">
+                <div class="text-3xl font-extrabold gradient-text">60</div>
+                <div class="mono text-xs text-[var(--text-muted)] mt-2">FPS on Edge</div>
+            </div>
+            <div class="glass-card rounded-lg p-6 text-center">
+                <div class="text-3xl font-extrabold gradient-text">23%</div>
+                <div class="mono text-xs text-[var(--text-muted)] mt-2">Better Than Human</div>
+            </div>
+            <div class="glass-card rounded-lg p-6 text-center">
+                <div class="text-3xl font-extrabold gradient-text">12ms</div>
+                <div class="mono text-xs text-[var(--text-muted)] mt-2">Inference Time</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12">_key_challenges</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass-card rounded-lg p-8">
+                    <h3 class="text-lg font-bold text-[var(--accent-cyan)] mono mb-4">01 // Edge Constraints</h3>
+                    <p class="text-[var(--text-muted)]">Jetson Nano has only 4GB shared memory. Had to quantize the YOLOv8-m model from FP32 to INT8 using TensorRT post-training quantization, losing only 0.8% mAP while gaining 4x speedup.</p>
+                </div>
+                <div class="glass-card rounded-lg p-8">
+                    <h3 class="text-lg font-bold text-[var(--accent-cyan)] mono mb-4">02 // Domain Shift</h3>
+                    <p class="text-[var(--text-muted)]">Factory lighting changes throughout the day. Solved with test-time augmentation — running inference on 4 augmented versions of each frame and averaging predictions for robustness.</p>
+                </div>
+                <div class="glass-card rounded-lg p-8">
+                    <h3 class="text-lg font-bold text-[var(--accent-cyan)] mono mb-4">03 // Data Imbalance</h3>
+                    <p class="text-[var(--text-muted)]">Defects are rare (~2% of samples). Used focal loss with γ=2.0 and oversampled defect patches via CutMix to balance the training distribution without losing normal-class representation.</p>
+                </div>
+                <div class="glass-card rounded-lg p-8">
+                    <h3 class="text-lg font-bold text-[var(--accent-cyan)] mono mb-4">04 // Real-Time Alerting</h3>
+                    <p class="text-[var(--text-muted)]">Built a C++ inference server that communicates with PLC controllers via Modbus TCP. When a defect is detected, the conveyor belt stops within 200ms — before the part reaches the next station.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8">_inference_pipeline</h2>
+            <div class="glass-card rounded-lg overflow-hidden">
+                <div class="terminal-header flex items-center space-x-2 px-4 py-3 bg-black/40">
+                    <div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div>
+                    <span class="mono text-xs text-[var(--text-muted)] ml-2">edge_infer.cpp</span>
+                </div>
+                <pre class="p-6 mono text-sm leading-relaxed overflow-x-auto"><code><span class="text-[var(--accent-purple)]">class</span> <span class="text-[var(--accent-cyan)]">DefectDetector</span> {
+<span class="text-[var(--accent-purple)]">public:</span>
+    <span class="text-white">DefectDetector</span>(<span class="text-[var(--accent-cyan)]">string</span> engine_path) {
+        <span class="text-[var(--text-muted)]">// Load TensorRT optimized engine</span>
+        runtime = nvinfer1::<span class="text-white">createInferRuntime</span>(logger);
+        engine = runtime-><span class="text-white">deserializeCudaEngine</span>(
+            buffer, buffer_size);
+        context = engine-><span class="text-white">createExecutionContext</span>();
+    }
+
+    <span class="text-[var(--accent-cyan)]">vector</span>&lt;Detection&gt; <span class="text-white">detect</span>(cv::Mat&amp; frame) {
+        <span class="text-[var(--accent-cyan)]">auto</span> preprocessed = <span class="text-white">preprocess</span>(frame);  <span class="text-[var(--text-muted)]">// Letterbox + normalize</span>
+        <span class="text-white">infer</span>(preprocessed);                       <span class="text-[var(--text-muted)]">// CUDA kernel launch</span>
+        <span class="text-[var(--accent-purple)]">return</span> <span class="text-white">postprocess</span>(outputs);            <span class="text-[var(--text-muted)]">// NMS + scale back</span>
+    }
+
+<span class="text-[var(--accent-purple)]">private:</span>
+    nvinfer1::IRuntime* runtime;
+    nvinfer1::ICudaEngine* engine;
+    nvinfer1::IExecutionContext* context;
+};</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 px-6 border-t border-white/5">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="project-legal-rag.html" class="mono text-sm text-[var(--text-muted)] hover:text-white transition">← LegalDoc RAG</a>
+            <a href="project-vqa.html" class="mono text-sm text-[var(--accent-cyan)] hover:opacity-80 transition">Next: Visual QA →</a>
+        </div>
+    </section>
+    <footer class="py-8 px-6 border-t border-white/5"><div class="max-w-6xl mx-auto text-center"><p class="text-xs text-[var(--text-muted)] mono">© 2024 Ahmed Farouk. All neural pathways reserved.</p></div></footer>
+</body>
+</html>

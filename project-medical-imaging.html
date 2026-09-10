@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Image Segmentation — Ahmed Farouk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-color:#0a0a0a; --card-bg:rgba(255,255,255,0.03); --accent-cyan:#00f3ff; --accent-purple:#bc13fe; --text-main:#e0e0e0; --text-muted:#8a8a8a; }
+        body { background-color:var(--bg-color); color:var(--text-main); font-family:'Inter',sans-serif; }
+        .mono { font-family:'JetBrains Mono',monospace; }
+        .grid-bg { background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:40px 40px; position:fixed; inset:0; z-index:-1; }
+        .glow-bg { background:radial-gradient(circle at 50% 0%,rgba(0,243,255,0.08),transparent 60%); position:fixed; inset:0; z-index:-1; }
+        .glass-card { background:var(--card-bg); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.05); }
+        .terminal-header { border-bottom:1px solid rgba(255,255,255,0.1); }
+        .dot { width:10px; height:10px; border-radius:50%; }
+        .gradient-text { background:linear-gradient(90deg,var(--accent-cyan),var(--accent-purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .scan-line { position:relative; overflow:hidden; }
+        .scan-line::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--accent-cyan); animation:scan 3s linear infinite; opacity:0.6; }
+        @keyframes scan { 0% { top:0; } 100% { top:100%; } }
+        ::-webkit-scrollbar { width:8px; } ::-webkit-scrollbar-track { background:var(--bg-color); } ::-webkit-scrollbar-thumb { background:var(--accent-purple); border-radius:4px; }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="glow-bg"></div>
+
+    <nav class="fixed top-0 w-full z-50 backdrop-blur-md bg-black/30 border-b border-white/5">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="mono text-xl font-bold gradient-text">root@ahmed_ai:~$</a>
+            <a href="index.html#projects" class="mono text-sm text-[var(--text-muted)] hover:text-white transition">← _back_to_projects</a>
+        </div>
+    </nav>
+
+    <header class="pt-32 pb-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="mono text-[var(--accent-cyan)] text-sm mb-4">PROJECT_006 // MEDICAL AI</div>
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-6">Medical Image Segmentation</h1>
+            <p class="text-xl text-[var(--text-muted)] max-w-3xl leading-relaxed">
+                U-Net++ based brain tumor segmentation from 3D MRI scans — achieving radiologist-level performance on the BRATS2023 dataset with novel attention-gated skip connections.
+            </p>
+            <div class="flex flex-wrap gap-3 mt-8 mono text-sm">
+                <span class="px-3 py-1 border border-[var(--accent-cyan)] text-[var(--accent-cyan)] rounded">U-Net++</span>
+                <span class="px-3 py-1 border border-[var(--accent-cyan)] text-[var(--accent-cyan)] rounded">MONAI</span>
+                <span class="px-3 py-1 border border-[var(--accent-cyan)] text-[var(--accent-cyan)] rounded">PyTorch</span>
+                <span class="px-3 py-1 border border-[var(--accent-cyan)] text-[var(--accent-cyan)] rounded">3D Slicer</span>
+                <span class="px-3 py-1 border border-[var(--accent-cyan)] text-[var(--accent-cyan)] rounded">BRATS2023</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="glass-card rounded-lg p-6 text-center"><div class="text-3xl font-extrabold gradient-text">0.91</div><div class="mono text-xs text-[var(--text-muted)] mt-2">Dice Coefficient</div></div>
+            <div class="glass-card rounded-lg p-6 text-center"><div class="text-3xl font-extrabold gradient-text">0.88</div><div class="mono text-xs text-[var(--text-muted)] mt-2">Hausdorff Distance (95%)</div></div>
+            <div class="glass-card rounded-lg p-6 text-center"><div class="text-3xl font-extrabold gradient-text">3</div><div class="mono text-xs text-[var(--text-muted)] mt-2">Tumor Regions Segmented</div></div>
+            <div class="glass-card rounded-lg p-6 text-center"><div class="text-3xl font-extrabold gradient-text">45s</div><div class="mono text-xs text-[var(--text-muted)] mt-2">Per-Volume Inference</div></div>
+        </div>
+    </section>
+
+    <!-- MRI Scan Mock -->
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8">_segmentation_pipeline</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass-card rounded-lg overflow-hidden scan-line">
+                    <img src="https://picsum.photos/seed/mri-brain-raw/400/400.jpg" alt="MRI Input" class="w-full h-64 object-cover opacity-80">
+                    <div class="p-4 mono text-sm"><span class="text-[var(--accent-cyan)]">INPUT</span><br><span class="text-[var(--text-muted)]">T1ce + T2 + FLAIR MRI</span></div>
+                </div>
+                <div class="glass-card rounded-lg overflow-hidden scan-line" style="animation-delay:1s">
+                    <img src="https://picsum.photos/seed/mri-brain-seg/400/400.jpg" alt="Segmentation Mask" class="w-full h-64 object-cover opacity-80" style="filter:hue-rotate(120deg) saturate(2)">
+                    <div class="p-4 mono text-sm"><span class="text-[var(--accent-purple)]">PREDICTION</span><br><span class="text-[var(--text-muted)]">3-class segmentation map</span></div>
+                </div>
+                <div class="glass-card rounded-lg overflow-hidden scan-line" style="animation-delay:2s">
+                    <img src="https://picsum.photos/seed/mri-brain-overlay/400/400.jpg" alt="Overlay" class="w-full h-64 object-cover opacity-80" style="filter:hue-rotate(60deg) saturate(1.5)">
+                    <div class="p-4 mono text-sm"><span class="text-green-400">OUTPUT</span><br><span class="text-[var(--text-muted)]">Overlay + volume metrics</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Training Details -->
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8">_training_regimen</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass-card rounded-lg p-8">
+                    <h3 class="text-lg font-bold text-[var(--accent-cyan)] mono mb-4">Data Preparation</h3>
+                    <ul class="space-y-3 text-[var(--text-muted)] text-sm">
+                        <li class="flex gap-2"><span class="text-[var(--accent-purple)]">→</span> BRATS2023: 8,500 training volumes across 4 MRI modalities</li>
+                        <li class="flex gap-2"><span class="text-[var(--accent-purple)]">→</span> Intensity normalization using z-score per modality</li>
+                        <li class="flex gap-2"><span class="text-[var(--accent-purple)]">→</span> Random crops: 128×128×128 with 4-class labels (background + 3 tumor regions)</li>
+                        <li class="flex gap-2"><span class="text-[var(--accent-purple)]">→</span> Augmentations: elastic deform, rotation, Gaussian noise, brightness shift</li>
+                    </ul>
+                </div>
+                <div class="glass-card rounded-lg p-8">
+                    <h3 class="text-lg font-bold text-[var(--accent-cyan)] mono mb-4">Training Configuration</h3>
+                    <ul class="space-y-3 text-[var(--text-muted)] text-sm">
+                        <li class="flex gap-2"><span class="text-[var(--accent-purple)]">→</span> Optimizer: AdamW (lr=1e-4, weight_decay=1e-5)</li>
+                        <li class="flex gap-2"><span class="text-[var(--accent-purple)]">→</span> Loss: Dice + Focal (α=0.5 each) — handles class imbalance</li>
+                        <li class="flex gap-2"><span class="text-[var(--accent-purple)]">→</span> LR Scheduler: Cosine annealing with warm restarts</li>
+                        <li class="flex gap-2"><span class="text-[var(--accent-purple)]">→</span> Hardware: 4× A100 80GB, mixed precision (AMP), 350 epochs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8">_model_definition</h2>
+            <div class="glass-card rounded-lg overflow-hidden">
+                <div class="terminal-header flex items-center space-x-2 px-4 py-3 bg-black/40">
+                    <div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div>
+                    <span class="mono text-xs text-[var(--text-muted)] ml-2">unet_plus_plus.py</span>
+                </div>
+                <pre class="p-6 mono text-sm leading-relaxed overflow-x-auto"><code><span class="text-[var(--accent-purple)]">class</span> <span class="text-[var(--accent-cyan)]">AttentionGate</span>(nn.Module):
+    <span class="text-[var(--text-muted])">"""Attention-gated skip connection for focused feature fusion"""</span>
+    <span class="text-[var(--accent-purple)]">def</span> <span class="text-white">__init__</span>(self, F_g, F_l, F_int):
+        <span class="text-[var(--accent-purple)]">super</span>().__init__()
+        self.W_g = nn.Sequential(
+            nn.Conv3d(F_g, F_int, kernel_size=<span class="text-orange-400">1</span>, stride=<span class="text-orange-400">1</span>, padding=<span class="text-orange-400">0</span>, bias=<span class="text-orange-400">True</span>),
+            nn.BatchNorm3d(F_int))
+        self.W_x = nn.Sequential(
+            nn.Conv3d(F_l, F_int, kernel_size=<span class="text-orange-400">1</span>, stride=<span class="text-orange-400">1</span>, padding=<span class="text-orange-400">0</span>, bias=<span class="text-orange-400">True</span>),
+            nn.BatchNorm3d(F_int))
+        self.psi = nn.Sequential(
+            nn.Conv3d(F_int, <span class="text-orange-400">1</span>, kernel_size=<span class="text-orange-400">1</span>, stride=<span class="text-orange-400">1</span>, padding=<span class="text-orange-400">0</span>, bias=<span class="text-orange-400">True</span>),
+            nn.Sigmoid())
+        self.relu = nn.ReLU(inplace=<span class="text-orange-400">True</span>)
+
+    <span class="text-[var(--accent-purple)]">def</span> <span class="text-white">forward</span>(self, g, x):
+        g1 = self.W_g(g)
+        x1 = self.W_x(x)
+        psi = self.relu(g1 + x1)
+        <span class="text-[var(--accent-purple)]">return</span> x * self.psi(psi)
+
+<span class="text-[var(--text-muted])"># Integrated into MONAI's UNet architecture</span>
+model = monai.networks.nets.<span class="text-[var(--accent-cyan)]">UNet</span>(
+    spatial_dims=<span class="text-orange-400">3</span>, in_channels=<span class="text-orange-400">4</span>,  <span class="text-[var(--text-muted])"># 4 MRI modalities</span>
+    out_channels=<span class="text-orange-400">4</span>,               <span class="text-[var(--text-muted])"># BG + TC + WT + ET</span>
+    channels=(<span class="text-orange-400">32</span>,<span class="text-orange-400">64</span>,<span class="text-orange-400">128</span>,<span class="text-orange-400">256</span>,<span class="text-orange-400">512</span>),
+    strides=(<span class="text-orange-400">2</span>,<span class="text-orange-400">2</span>,<span class="text-orange-400">2</span>,<span class="text-orange-400">2</span>),
+    dropout=<span class="text-orange-400">0.2</span>)</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 px-6 border-t border-white/5">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="project-voice-cloning.html" class="mono text-sm text-[var(--text-muted)] hover:text-white transition">← Voice Cloning</a>
+            <a href="index.html#projects" class="mono text-sm text-[var(--accent-cyan)] hover:opacity-80 transition">Back to All Projects →</a>
+        </div>
+    </section>
+    <footer class="py-8 px-6 border-t border-white/5"><div class="max-w-6xl mx-auto text-center"><p class="text-xs text-[var(--text-muted)] mono">© 2024 Ahmed Farouk. All neural pathways reserved.</p></div></footer>
+</body>
+</html>

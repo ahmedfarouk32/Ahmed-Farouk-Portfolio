@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmed Farouk — Projects Portfolio</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Times New Roman", Times, Georgia, serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #000;
+            padding: 2cm;
+            max-width: 210mm;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 22pt;
+            text-align: center;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 11pt;
+            color: #444;
+            margin-bottom: 30px;
+        }
+        .divider {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin: 24px 0;
+        }
+        h2 {
+            font-size: 16pt;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+        .project-label {
+            font-size: 9pt;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #666;
+            margin-bottom: 2px;
+        }
+        .project-desc {
+            margin-bottom: 16px;
+        }
+        .metrics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 16px;
+        }
+        .metric {
+            flex: 1;
+            min-width: 100px;
+        }
+        .metric-value {
+            font-size: 18pt;
+            font-weight: bold;
+        }
+        .metric-label {
+            font-size: 9pt;
+            color: #666;
+        }
+        .tech-tags {
+            font-size: 9pt;
+            color: #555;
+            margin-bottom: 16px;
+        }
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 14px;
+            margin-bottom: 4px;
+        }
+        p, li {
+            margin-bottom: 6px;
+            text-align: justify;
+        }
+        ul {
+            padding-left: 20px;
+            margin-bottom: 12px;
+        }
+        pre {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 9pt;
+            background: #f5f5f5;
+            padding: 12px;
+            border: 1px solid #ddd;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+        .footer-text {
+            text-align: center;
+            font-size: 9pt;
+            color: #888;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Ahmed Farouk</h1>
+    <div class="subtitle">AI & ML Engineer — Project Portfolio</div>
+    <hr class="divider">
+
+    <!-- ============================================================ -->
+    <!-- PROJECT 1 -->
+    <!-- ============================================================ -->
+
+    <div class="project-label">Project 01 — NLP</div>
+    <h2>LegalDoc RAG System</h2>
+    <p class="project-desc">
+        A Retrieval-Augmented Generation pipeline that transforms how legal teams review contracts and case files — reducing review time by 60% with AI-powered document intelligence.
+    </p>
+
+    <div class="metrics">
+        <div class="metric">
+            <div class="metric-value">60%</div>
+            <div class="metric-label">Faster Review Time</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">15K+</div>
+            <div class="metric-label">Documents Indexed</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">2.1s</div>
+            <div class="metric-label">Avg Query Latency</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">96%</div>
+            <div class="metric-label">Relevance Score</div>
+        </div>
+    </div>
+
+    <div class="tech-tags">Technologies: Python, LangChain, Pinecone, LLaMA-3, FastAPI</div>
+
+    <h3>System Architecture</h3>
+    <p>
+        PDF/DOCX Input → Chunker → Embedder → Pinecone Vector DB. User Query → Semantic Search → Top-K Context → Fine-tuned LLaMA-3 Generator → Answer with Citations.
+    </p>
+
+    <h3>Build Process</h3>
+    <ul>
+        <li><strong>Document Ingestion & Preprocessing:</strong> Built custom PDF/DOCX parsers that handle complex legal formatting — tables, footnotes, multi-column layouts. Documents are cleaned, deduplicated, and split into semantic chunks using recursive character splitting with overlap.</li>
+        <li><strong>Embedding & Vector Indexing:</strong> Used OpenAI's text-embedding-3-large model to create 3072-dimensional vectors. Indexed in Pinecone with metadata filtering for document type, jurisdiction, and date — enabling hybrid search.</li>
+        <li><strong>LLaMA-3 Fine-Tuning:</strong> Fine-tuned LLaMA-3-8B on 2,000 expert-annotated legal Q&A pairs using QLoRA (4-bit quantization). Trained on 2x A100 GPUs for 3 epochs with a custom loss function that penalizes hallucinated citations.</li>
+        <li><strong>API Deployment & Monitoring:</strong> Wrapped in FastAPI with async request handling, response caching in Redis, and a Streamlit dashboard for non-technical users. Integrated LangSmith for tracing every retrieval and generation step.</li>
+    </ul>
+
+    <hr class="divider">
+
+    <!-- ============================================================ -->
+    <!-- PROJECT 2 -->
+    <!-- ============================================================ -->
+
+    <div class="project-label">Project 02 — Computer Vision</div>
+    <h2>Real-Time Anomaly Detection</h2>
+    <p class="project-desc">
+        Edge-deployed YOLOv8 model running on NVIDIA Jetson Nano that inspects manufactured parts at 60 FPS — catching defects human inspectors miss 23% of the time.
+    </p>
+
+    <div class="metrics">
+        <div class="metric">
+            <div class="metric-value">94%</div>
+            <div class="metric-label">mAP@0.5</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">60</div>
+            <div class="metric-label">FPS on Edge</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">23%</div>
+            <div class="metric-label">Better Than Human</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">12ms</div>
+            <div class="metric-label">Inference Time</div>
+        </div>
+    </div>
+
+    <div class="tech-tags">Technologies: PyTorch, YOLOv8, TensorRT, OpenCV, C++</div>
+
+    <h3>Key Challenges</h3>
+    <ul>
+        <li><strong>Edge Constraints:</strong> Jetson Nano has only 4GB shared memory. Had to quantize the YOLOv8-m model from FP32 to INT8 using TensorRT post-training quantization, losing only 0.8% mAP while gaining 4x speedup.</li>
+        <li><strong>Domain Shift:</strong> Factory lighting changes throughout the day. Solved with test-time augmentation — running inference on 4 augmented versions of each frame and averaging predictions for robustness.</li>
+        <li><strong>Data Imbalance:</strong> Defects are rare (~2% of samples). Used focal loss with gamma=2.0 and oversampled defect patches via CutMix to balance the training distribution without losing normal-class representation.</li>
+        <li><strong>Real-Time Alerting:</strong> Built a C++ inference server that communicates with PLC controllers via Modbus TCP. When a defect is detected, the conveyor belt stops within 200ms — before the part reaches the next station.</li>
+    </ul>
+
+    <hr class="divider">
+
+    <!-- ============================================================ -->
+    <!-- PROJECT 3 -->
+    <!-- ============================================================ -->
+
+    <div class="page-break"></div>
+
+    <div class="project-label">Project 03 — Multimodal AI</div>
+    <h2>Visual Question Answering (VQA)</h2>
+    <p class="project-desc">
+        A multimodal system that sees images and reads questions — then reasons about both to produce accurate, human-readable answers. Deployed as a microservice on AWS.
+    </p>
+
+    <div class="metrics">
+        <div class="metric">
+            <div class="metric-value">72%</div>
+            <div class="metric-label">VQA Accuracy</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">340ms</div>
+            <div class="metric-label">End-to-End Latency</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">85M</div>
+            <div class="metric-label">Parameters</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">99.9%</div>
+            <div class="metric-label">API Uptime</div>
+        </div>
+    </div>
+
+    <div class="tech-tags">Technologies: TensorFlow, BERT, ResNet-152, HuggingFace, Docker, AWS EC2</div>
+
+    <h3>Model Architecture</h3>
+    <p>
+        The model combines a pretrained ResNet-152 vision encoder (output projected to 768 dimensions) with a pretrained BERT-base text encoder. A multi-head attention layer fuses visual and textual features, followed by a softmax classifier over 3,129 possible answers.
+    </p>
+
+    <h3>Example Interaction</h3>
+    <p>
+        Input Image: A kitchen scene with objects on a counter.<br>
+        Question: "What color is the cup on the counter?"<br>
+        Answer: "Red" (Confidence: 0.94)<br>
+        Attention map: cup region (0.82), counter (0.12), background (0.06)
+    </p>
+
+    <h3>Deployment</h3>
+    <p>
+        Containerized with Docker and deployed on AWS EC2 with a g4dn.xlarge GPU instance. FastAPI serves predictions with async request handling. Health checks and auto-scaling configured via ECS.
+    </p>
+
+    <hr class="divider">
+
+    <!-- ============================================================ -->
+    <!-- PROJECT 4 -->
+    <!-- ============================================================ -->
+
+    <div class="project-label">Project 04 — NLP + Streaming</div>
+    <h2>Sentiment Intelligence Dashboard</h2>
+    <p class="project-desc">
+        A real-time social media sentiment analysis engine processing 50,000+ tweets per hour with a fine-tuned DistilBERT model, live visualization, and alert system.
+    </p>
+
+    <div class="metrics">
+        <div class="metric">
+            <div class="metric-value">89%</div>
+            <div class="metric-label">Macro F1-Score</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">50K+</div>
+            <div class="metric-label">Tweets / Hour</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">8ms</div>
+            <div class="metric-label">Per-Tweet Latency</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">24/7</div>
+            <div class="metric-label">Uptime (6 months)</div>
+        </div>
+    </div>
+
+    <div class="tech-tags">Technologies: DistilBERT, Apache Kafka, Streamlit, Redis, Twitter API</div>
+
+    <h3>Streaming Architecture</h3>
+    <p>
+        Tweets are ingested via the Twitter Streaming API into Apache Kafka topics. A consumer service batches incoming tweets (batch size 32), tokenizes them with DistilBERT tokenizer (max length 128), runs batch inference in 8ms, and publishes labeled results to a Redis pub/sub channel. A Streamlit dashboard subscribes to the channel and updates sentiment distribution charts, live feed, and alert triggers in real time.
+    </p>
+
+    <h3>Sentiment Distribution (Sample)</h3>
+    <p>
+        Positive: 42.3% | Neutral: 38.1% | Negative: 19.6%
+    </p>
+
+    <h3>Fine-Tuning Details</h3>
+    <p>
+        DistilBERT-base-uncased fine-tuned on 100K manually labeled tweets (Sentiment140 + custom brand-specific dataset). Used weighted cross-entropy loss to handle class imbalance. Achieved 89% macro F1 across 3 classes with 5 epochs on a single V100.
+    </p>
+
+    <hr class="divider">
+
+    <!-- ============================================================ -->
+    <!-- PROJECT 5 -->
+    <!-- ============================================================ -->
+
+    <div class="page-break"></div>
+
+    <div class="project-label">Project 05 — Audio AI</div>
+    <h2>Neural Voice Cloning</h2>
+    <p class="project-desc">
+        Zero-shot voice cloning with XTTS v2 — generate natural, emotive speech in any voice from just a 3-second audio reference. Built for accessibility, content creation, and audiobook narration.
+    </p>
+
+    <div class="metrics">
+        <div class="metric">
+            <div class="metric-value">4.12</div>
+            <div class="metric-label">MOS Score (out of 5)</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">3s</div>
+            <div class="metric-label">Reference Audio Needed</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">1.8s</div>
+            <div class="metric-label">Generation Per Second</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">17</div>
+            <div class="metric-label">Languages Supported</div>
+        </div>
+    </div>
+
+    <div class="tech-tags">Technologies: XTTS v2, PyTorch, Gradio, Librosa, A100 GPU</div>
+
+    <h3>How It Works</h3>
+    <p>
+        A 3-second reference audio clip is passed through XTTS v2's speaker encoder to extract a speaker embedding vector. This embedding conditions the text-to-speech decoder to synthesize speech in the reference speaker's voice. The system supports 17 languages and can generate emotive speech with configurable emotion parameters (neutral, happy, sad, angry).
+    </p>
+
+    <h3>Fine-Tuning Approach</h3>
+    <p>
+        The base XTTS v2 model was fine-tuned on 50 audio files (~30 minutes) per target speaker using the Coqui TTS training pipeline. Learning rate: 1e-5 with cosine annealing. Training on a single A100 GPU took approximately 2 hours per speaker. A Gradio web interface was built for non-technical users to upload a reference clip, type text, and download the cloned audio.
+    </p>
+
+    <h3>Use Cases</h3>
+    <ul>
+        <li>Accessibility: Generating speech for individuals who have lost their voice</li>
+        <li>Content Creation: Audiobook narration in a consistent voice across chapters</li>
+        <li>Education: Creating personalized learning materials with familiar voices</li>
+    </ul>
+
+    <hr class="divider">
+
+    <!-- ============================================================ -->
+    <!-- PROJECT 6 -->
+    <!-- ============================================================ -->
+
+    <div class="project-label">Project 06 — Medical AI</div>
+    <h2>Medical Image Segmentation</h2>
+    <p class="project-desc">
+        U-Net++ based brain tumor segmentation from 3D MRI scans — achieving radiologist-level performance on the BRATS2023 dataset with novel attention-gated skip connections.
+    </p>
+
+    <div class="metrics">
+        <div class="metric">
+            <div class="metric-value">0.91</div>
+            <div class="metric-label">Dice Coefficient</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">0.88</div>
+            <div class="metric-label">Hausdorff Distance (95%)</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">3</div>
+            <div class="metric-label">Tumor Regions Segmented</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">45s</div>
+            <div class="metric-label">Per-Volume Inference</div>
+        </div>
+    </div>
+
+    <div class="tech-tags">Technologies: U-Net++, MONAI, PyTorch, 3D Slicer, BRATS2023</div>
+
+    <h3>Data Preparation</h3>
+    <ul>
+        <li>BRATS2023: 8,500 training volumes across 4 MRI modalities (T1, T1ce, T2, FLAIR)</li>
+        <li>Intensity normalization using z-score per modality</li>
+        <li>Random crops: 128x128x128 with 4-class labels (background + 3 tumor regions: enhancing tumor, tumor core, whole tumor)</li>
+        <li>Augmentations: elastic deformation, rotation, Gaussian noise, brightness shift</li>
+    </ul>
+
+    <h3>Training Configuration</h3>
+    <ul>
+        <li>Optimizer: AdamW (lr=1e-4, weight decay=1e-5)</li>
+        <li>Loss: Combined Dice + Focal loss (alpha=0.5 each) to handle severe class imbalance</li>
+        <li>LR Scheduler: Cosine annealing with warm restarts</li>
+        <li>Hardware: 4x A100 80GB GPUs, mixed precision (AMP), 350 epochs</li>
+    </ul>
+
+    <h3>Model Architecture</h3>
+    <p>
+        Based on U-Net++ with attention-gated skip connections. The attention gate takes the gating signal from the decoder and the skip connection from the encoder, computes attention coefficients via a sigmoid activation, and multiplies the skip features to suppress irrelevant regions and focus on tumor boundaries. Built using MONAI's UNet implementation with custom attention modules. Input: 4 channels (MRI modalities), Output: 4 channels (background + 3 tumor regions), Channel depths: 32-64-128-256-512 with stride-2 downsampling.
+    </p>
+
+    <h3>Clinical Integration</h3>
+    <p>
+        Segmentation masks are exported as NIfTI files compatible with 3D Slicer for radiologist review. Volume metrics (tumor volume in cm³) are automatically computed and formatted into a structured report. The model runs as a REST API using FastAPI, integrated into the hospital's PACS system for on-demand analysis.
+    </p>
+
+    <hr class="divider">
+
+    <div class="footer-text">
+        © 2024 Ahmed Farouk — All neural pathways reserved.
+    </div>
+
+</body>
+</html>

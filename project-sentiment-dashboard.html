@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Intelligence Dashboard — Ahmed Farouk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-color:#0a0a0a; --card-bg:rgba(255,255,255,0.03); --accent-cyan:#00f3ff; --accent-purple:#bc13fe; --text-main:#e0e0e0; --text-muted:#8a8a8a; }
+        body { background-color:var(--bg-color); color:var(--text-main); font-family:'Inter',sans-serif; }
+        .mono { font-family:'JetBrains Mono',monospace; }
+        .grid-bg { background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:40px 40px; position:fixed; inset:0; z-index:-1; }
+        .glow-bg { background:radial-gradient(circle at 70% 0%,rgba(0,243,255,0.1),transparent 60%); position:fixed; inset:0; z-index:-1; }
+        .glass-card { background:var(--card-bg); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.05); }
+        .terminal-header { border-bottom:1px solid rgba(255,255,255,0.1); }
+        .dot { width:10px; height:10px; border-radius:50%; }
+        .gradient-text { background:linear-gradient(90deg,var(--accent-cyan),var(--accent-purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .sentiment-bar { height:24px; border-radius:4px; display:flex; overflow:hidden; }
+        .sentiment-pos { background:#22c55e; } .sentiment-neu { background:#eab308; } .sentiment-neg { background:#ef4444; }
+        ::-webkit-scrollbar { width:8px; } ::-webkit-scrollbar-track { background:var(--bg-color); } ::-webkit-scrollbar-thumb { background:var(--accent-purple); border-radius:4px; }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="glow-bg"></div>
+
+    <nav class="fixed top-0 w-full z-50 backdrop-blur-md bg-black/30 border-b border-white/5">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="mono text-xl font-bold gradient-text">root@ahmed_ai:~$</a>
+            <a href="index.html#projects" class="mono text-sm text-[var(--text-muted)] hover:text-white transition">← _back_to_projects</a>
+        </div>
+    </nav>
+
+    <header class="pt-32 pb-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="mono text-[var(--accent-cyan)] text-sm mb-4">PROJECT_004 // NLP + STREAMING</div>
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-6">Sentiment Intelligence Dashboard</h1>
+            <p class="text-xl text-[var(--text-muted)] max-w-3xl leading-relaxed">
+                A real-time social media sentiment analysis engine processing 50,000+ tweets per hour with a fine-tuned DistilBERT model, live visualization, and alert system.
+            </p>
+            <div class="flex flex-wrap gap-3 mt-8 mono text-sm">
+                <span class="px-3 py-1 border border-[var(--accent-cyan)] text-[var(--accent-cyan)] rounded">DistilBERT</span>
+                <span class="px-3 py-1 border border-[var(--accent-cyan)] text-[var(--accent-cyan)] rounded">Apache Kafka</span>
+                <span class="px-3 py-1 border border-[var(--accent-cyan)] text-[var(--accent-cyan)] rounded">Streamlit</span>
+                <span class="px-3 py-1 border border-[var(--accent-cyan)] text-[var(--accent-cyan)] rounded">Redis</span>
+                <span class="px-3 py-1 border border-[var(--accent-cyan)] text-[var(--accent-cyan)] rounded">Twitter API</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="glass-card rounded-lg p-6 text-center"><div class="text-3xl font-extrabold gradient-text">89%</div><div class="mono text-xs text-[var(--text-muted)] mt-2">Macro F1-Score</div></div>
+            <div class="glass-card rounded-lg p-6 text-center"><div class="text-3xl font-extrabold gradient-text">50K+</div><div class="mono text-xs text-[var(--text-muted)] mt-2">Tweets / Hour</div></div>
+            <div class="glass-card rounded-lg p-6 text-center"><div class="text-3xl font-extrabold gradient-text">8ms</div><div class="mono text-xs text-[var(--text-muted)] mt-2">Per-Tweet Latency</div></div>
+            <div class="glass-card rounded-lg p-6 text-center"><div class="text-3xl font-extrabold gradient-text">24/7</div><div class="mono text-xs text-[var(--text-muted)] mt-2">Uptime (6 months)</div></div>
+        </div>
+    </section>
+
+    <!-- Simulated Dashboard -->
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8">_dashboard_preview</h2>
+            <div class="glass-card rounded-lg overflow-hidden">
+                <div class="terminal-header flex items-center space-x-2 px-4 py-3 bg-black/40">
+                    <div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div>
+                    <span class="mono text-xs text-[var(--text-muted)] ml-2">sentiment_dashboard — live</span>
+                </div>
+                <div class="p-8 space-y-6">
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="bg-black/40 rounded-lg p-4"><div class="text-xs mono text-green-400 mb-1">POSITIVE</div><div class="text-3xl font-bold text-green-400">42.3%</div></div>
+                        <div class="bg-black/40 rounded-lg p-4"><div class="text-xs mono text-yellow-400 mb-1">NEUTRAL</div><div class="text-3xl font-bold text-yellow-400">38.1%</div></div>
+                        <div class="bg-black/40 rounded-lg p-4"><div class="text-xs mono text-red-400 mb-1">NEGATIVE</div><div class="text-3xl font-bold text-red-400">19.6%</div></div>
+                    </div>
+                    <div>
+                        <div class="mono text-xs text-[var(--text-muted)] mb-2">Sentiment Distribution (last 1 hour)</div>
+                        <div class="sentiment-bar">
+                            <div class="sentiment-pos" style="width:42.3%"></div>
+                            <div class="sentiment-neu" style="width:38.1%"></div>
+                            <div class="sentiment-neg" style="width:19.6%"></div>
+                        </div>
+                    </div>
+                    <div class="bg-black/40 rounded-lg p-4">
+                        <div class="mono text-xs text-[var(--text-muted)] mb-3">LIVE FEED (sampled)</div>
+                        <div class="space-y-2 mono text-xs">
+                            <div class="flex justify-between"><span class="text-[var(--text-muted)] truncate max-w-[70%]">"Just upgraded to the new model and it's incredible..."</span><span class="text-green-400">POS 0.97</span></div>
+                            <div class="flex justify-between"><span class="text-[var(--text-muted)] truncate max-w-[70%]">"The service was okay, nothing special really."</span><span class="text-yellow-400">NEU 0.88</span></div>
+                            <div class="flex justify-between"><span class="text-[var(--text-muted)] truncate max-w-[70%]">"Worst customer experience I've ever had. Refund now."</span><span class="text-red-400">NEG 0.99</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8">_streaming_architecture</h2>
+            <div class="glass-card rounded-lg overflow-hidden">
+                <div class="terminal-header flex items-center space-x-2 px-4 py-3 bg-black/40">
+                    <div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div>
+                    <span class="mono text-xs text-[var(--text-muted)] ml-2">stream_topology.py</span>
+                </div>
+                <pre class="p-6 mono text-sm leading-relaxed overflow-x-auto"><code><span class="text-[var(--text-muted)]"># Kafka consumer → Batch inference → Redis pub/sub</span>
+
+<span class="text-[var(--accent-purple)]">def</span> <span class="text-white">consume_and_predict</span>(consumer, model, batch_size=<span class="text-orange-400">32</span>):
+    batch = []
+    <span class="text-[var(--accent-purple)]">for</span> message <span class="text-[var(--accent-purple)]">in</span> consumer:
+        batch.append(message.value)
+        
+        <span class="text-[var(--accent-purple)]">if</span> len(batch) >= batch_size:
+            <span class="text-[var(--text-muted)]"># Tokenize batch efficiently</span>
+            inputs = tokenizer(batch, padding=<span class="text-orange-400">True</span>,
+                             truncation=<span class="text-orange-400">True</span>,
+                             return_tensors=<span class="text-green-400">'tf'</span>,
+                             max_length=<span class="text-orange-400">128</span>)
+            
+            <span class="text-[var(--text-muted)]"># Batch prediction — 8ms for 32 tweets</span>
+            predictions = model(inputs)[<span class="text-green-400">'logits'</span>]
+            labels = tf.argmax(predictions, axis=-1).numpy()
+            
+            <span class="text-[var(--text-muted)]"># Publish to Redis for dashboard</span>
+            <span class="text-[var(--accent-purple)]">for</span> tweet, label <span class="text-[var(--accent-purple)]">in</span> zip(batch, labels):
+                redis_client.publish(<span class="text-green-400">'sentiment_stream'</span>,
+                    json.dumps({<span class="text-green-400">"text"</span>: tweet, 
+                                <span class="text-green-400">"label"</span>: id2label[label]}))
+            batch = []</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 px-6 border-t border-white/5">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="project-vqa.html" class="mono text-sm text-[var(--text-muted)] hover:text-white transition">← Visual QA</a>
+            <a href="project-voice-cloning.html" class="mono text-sm text-[var(--accent-cyan)] hover:opacity-80 transition">Next: Voice Cloning →</a>
+        </div>
+    </section>
+    <footer class="py-8 px-6 border-t border-white/5"><div class="max-w-6xl mx-auto text-center"><p class="text-xs text-[var(--text-muted)] mono">© 2024 Ahmed Farouk. All neural pathways reserved.</p></div></footer>
+</body>
+</html>

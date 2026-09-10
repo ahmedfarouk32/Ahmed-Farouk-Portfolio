@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmed Farouk | AI & ML Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --accent-cyan: #00f3ff;
+            --accent-purple: #bc13fe;
+            --text-main: #e0e0e0;
+            --text-muted: #8a8a8a;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center;
+            z-index: -1;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+        }
+        .glow-bg {
+            background: radial-gradient(circle at 50% 0%, rgba(188, 19, 254, 0.15), transparent 60%);
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+        }
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+            transform: translateY(-5px);
+        }
+        .terminal-header { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .cursor::after {
+            content: '▋';
+            color: var(--accent-cyan);
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .gradient-text {
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-purple); border-radius: 4px; }
+        .project-link {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-size: 0.8rem;
+            margin-top: 16px;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        .project-link:hover { opacity: 1; gap: 14px; }
+        .project-link svg { width: 14px; height: 14px; transition: transform 0.3s ease; }
+        .project-link:hover svg { transform: translateX(3px); }
+        .metric-bar {
+            height: 4px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        .metric-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 1.5s ease;
+            width: 0;
+        }
+        .metric-fill.animated { width: var(--fill-width); }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="glow-bg"></div>
+
+    <!-- NAVIGATION -->
+    <nav class="fixed top-0 w-full z-50 backdrop-blur-md bg-black/30 border-b border-white/5">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="mono text-xl font-bold gradient-text">Ahmed Farouk</div>
+            <div class="hidden md:flex space-x-8 mono text-sm text-[var(--text-muted)]">
+                <a href="#about" class="hover:text-white transition">about</a>
+                <a href="#skills" class="hover:text-white transition">skills</a>
+                <a href="#projects" class="hover:text-white transition">projects</a>
+                <a href="#contact" class="hover:text-white transition">contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header id="home" class="min-h-screen flex items-center justify-center px-6 pt-20">
+        <div class="max-w-4xl text-center">
+            <div class="mono text-[var(--accent-cyan)] mb-4 text-sm tracking-widest">> INITIALIZING NEURAL INTERFACE...</div>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+                I build intelligence <br><span class="gradient-text">for machines.</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-[var(--text-muted)] mb-10 mono">
+                <span id="typed-text"></span><span class="cursor"></span>
+            </p>
+            <a href="#projects" class="mono px-8 py-3 border border-[var(--accent-cyan)] text-[var(--accent-cyan)] hover:bg-[var(--accent-cyan)] hover:text-black transition duration-300">
+                view projects
+            </a>
+        </div>
+    </header>
+
+    <!-- ABOUT -->
+    <section id="about" class="py-24 px-6 reveal">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div class="glass-card rounded-lg overflow-hidden shadow-2xl">
+                <div class="terminal-header flex items-center space-x-2 px-4 py-3 bg-black/40">
+                    <div class="dot bg-red-500"></div>
+                    <div class="dot bg-yellow-500"></div>
+                    <div class="dot bg-green-500"></div>
+                    <span class="mono text-xs text-[var(--text-muted)] ml-2">ahmed@ai-cluster: ~/readme.md</span>
+                </div>
+                <div class="p-6 mono text-sm leading-relaxed text-left">
+                    <p><span class="text-[var(--accent-purple)]">class</span> <span class="text-[var(--accent-cyan)]">AIEngineer</span>:</p>
+                    <p class="pl-4"><span class="text-[var(--accent-purple)]">def</span> <span class="text-white">__init__</span>(self):</p>
+                    <p class="pl-8">self.name = <span class="text-green-400">"Ahmed Farouk"</span></p>
+                    <p class="pl-8">self.role = <span class="text-green-400">"AI/ML Engineer"</span></p>
+                    <p class="pl-8">self.focus = [<span class="text-green-400">"NLP"</span>, <span class="text-green-400">"Computer Vision"</span>, <span class="text-green-400">"GenAI"</span>]</p>
+                    <p class="pl-8">self.experience = <span class="text-orange-400">3</span> <span class="text-[var(--text-muted)]"># Years</span></p>
+                    <p class="pl-4"><span class="text-[var(--accent-purple)]">def</span> <span class="text-white">solve_problem</span>(self, data):</p>
+                    <p class="pl-8"><span class="text-[var(--accent-purple)]">return</span> model.optimize(data)</p>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-4xl font-bold mb-6">system profile</h2>
+                <p class="text-[var(--text-muted)] text-lg mb-4 leading-relaxed">
+                    I specialize in architecting end-to-end machine learning pipelines that bridge the gap between raw data and human-like understanding.
+                </p>
+                <p class="text-[var(--text-muted)] text-lg leading-relaxed">
+                    From real-time object detection on edge devices to fine-tuning Large Language Models for enterprise search, my focus is on deploying scalable, efficient, and robust AI solutions.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="py-24 px-6 reveal">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center">tech stack</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="glass-card p-6 rounded-lg text-center">
+                    <h3 class="mono text-[var(--accent-cyan)] mb-2">Deep Learning</h3>
+                    <p class="text-sm text-[var(--text-muted)]">PyTorch, TensorFlow, Keras</p>
+                </div>
+                <div class="glass-card p-6 rounded-lg text-center">
+                    <h3 class="mono text-[var(--accent-cyan)] mb-2">NLP / GenAI</h3>
+                    <p class="text-sm text-[var(--text-muted)]">HuggingFace, LangChain, LLaMA, SpaCy</p>
+                </div>
+                <div class="glass-card p-6 rounded-lg text-center">
+                    <h3 class="mono text-[var(--accent-cyan)] mb-2">Computer Vision</h3>
+                    <p class="text-sm text-[var(--text-muted)]">OpenCV, YOLO, ResNet, MediaPipe</p>
+                </div>
+                <div class="glass-card p-6 rounded-lg text-center">
+                    <h3 class="mono text-[var(--accent-cyan)] mb-2">MLOps & Cloud</h3>
+                    <p class="text-sm text-[var(--text-muted)]">Docker, AWS SageMaker, FastAPI, K8s</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="py-24 px-6 reveal">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl font-bold mb-4">neural executions</h2>
+            <p class="text-[var(--text-muted)] mb-12 mono text-sm">> 6 deployed systems — click to inspect each pipeline</p>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+
+                <!-- Project 1 -->
+                <div class="glass-card rounded-lg p-8 group">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold text-white">LegalDoc RAG System</h3>
+                        <span class="mono text-xs px-2 py-1 border border-[var(--accent-purple)] text-[var(--accent-purple)] rounded">NLP</span>
+                    </div>
+                    <p class="text-[var(--text-muted)] mb-4">
+                        Built a Retrieval-Augmented Generation pipeline using LangChain and a custom-fine-tuned LLaMA-3 model, reducing legal document review time by 60%.
+                    </p>
+                    <div class="metric-bar"><div class="metric-fill" style="--fill-width:60%; background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));"></div></div>
+                    <p class="text-xs text-[var(--text-muted)] mt-1 mono">60% faster review</p>
+                    <div class="mono text-sm flex flex-wrap gap-2 text-[var(--text-muted)] mt-4">
+                        <span class="bg-black/40 px-2 py-1 rounded">Python</span>
+                        <span class="bg-black/40 px-2 py-1 rounded">LangChain</span>
+                        <span class="bg-black/40 px-2 py-1 rounded">Pinecone</span>
+                        <span class="bg-black/40 px-2 py-1 rounded">FastAPI</span>
+                    </div>
+                    <a href="project-legal-rag.html" class="project-link mono">
+                        View full case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="glass-card rounded-lg p-8 group">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold text-white">Real-Time Anomaly Detection</h3>
+                        <span class="mono text-xs px-2 py-1 border border-[var(--accent-cyan)] text-[var(--accent-cyan)] rounded">CV</span>
+                    </div>
+                    <p class="text-[var(--text-muted)] mb-4">
+                        Deployed a YOLOv8-based computer vision model on edge devices (Jetson Nano) to detect manufacturing defects in real-time at 60 FPS.
+                    </p>
+                    <div class="metric-bar"><div class="metric-fill" style="--fill-width:94%; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));"></div></div>
+                    <p class="text-xs text-[var(--text-muted)] mt-1 mono">94% mAP@0.5 accuracy</p>
+                    <div class="mono text-sm flex flex-wrap gap-2 text-[var(--text-muted)] mt-4">
+                        <span class="bg-black/40 px-2 py-1 rounded">PyTorch</span>
+                        <span class="bg-black/40 px-2 py-1 rounded">OpenCV</span>
+                        <span class="bg-black/40 px-2 py-1 rounded">TensorRT</span>
+                        <span class="bg-black/40 px-2 py-1 rounded">C++</span>
+                    </div>
+                    <a href="project-anomaly-detection.html" class="project-link mono">
+                        View full case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="glass-card rounded-lg p-8 group">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold text-white">Visual Question Answering</h3>
+                        <span class="mono text-xs px-2 py-1 border border-[var(--accent-purple)] text-[var(--accent-purple)] rounded">CV+NLP</span>
+                    </div>
+                    <p class="text-[var(--text-muted)] mb-4">
+                        Multimodal AI combining a ResNet vision encoder with a BERT text decoder to answer natural language questions about image content.
+                    </p>
+                    <div class="metric-bar"><div class="metric-fill" style="--fill-width:72%; background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));"></div></div>
+                    <p class="text-xs text-[var(--text-muted)] mt-1 mono">72% VQA accuracy</p>
+                    <div class="mono text-sm flex flex-wrap gap-2 text-[var(--text-muted)] mt-4">
+                        <span class="bg-black/40 px-2 py-1 rounded">TensorFlow</span>
+                        <span class="bg-black/40 px-2 py-1 rounded">HuggingFace</span>
+                        <span class="bg-black/40 px-2 py-1 rounded">Docker</span>
+                        <span class="bg-black/40 px-2 py-1 rounded">AWS EC2</span>
+                    </div>
+                    <a href="project-vqa.html" class="project-link mono">
+                        View full case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+
+                <!-- Project 4: NEW -->
+                <div class="glass-card rounded-lg p-8 group">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold text-white">Sentiment Intelligence Dashboard</h3>
+                        <span class="mono text-xs px-2 py-1 border border-[var(--accent-cyan)] text-[var(--accent-cyan)] rounded">NLP</span>
+                    </div>
+                    <p class="text-[var(--text-muted)] mb-4">
+                        Real-time social media sentiment analysis pipeline processing 50K+ tweets/hour with fine-tuned DistilBERT and live streaming dashboard.
+                    </p>
+                    <div class="metric-bar"><div class="metric-fill" style="--fill-width:89%; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));"></div></div>
+                    <p class="text-xs text-[var(--text-muted)] mt-1 mono">89% F1-score, 50K/hr throughput</p>
+                    <div class="mono text-sm flex flex-wrap gap-2 text-[var(--text-muted)] mt-4">
+                        <span class="bg-black/40 px-2 py-1 rounded">DistilBERT</span>
+                        <span class="bg-black/40 px-2 py-1 rounded">Kafka</span>
+                        <span class="bg-black/40 px-2 py-1 rounded">Streamlit</span>
+                        <span class="bg-black/40 px-2 py-1 rounded">Redis</span>
+                    </div>
+                    <a href="project-sentiment-dashboard.html" class="project-link mono">
+                        View full case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+
+                <!-- Project 5: NEW -->
+                <div class="glass-card rounded-lg p-8 group">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold text-white">Neural Voice Cloning</h3>
+                        <span class="mono text-xs px-2 py-1 border border-[var(--accent-purple)] text-[var(--accent-purple)] rounded">Audio</span>
+                    </div>
+                    <p class="text-[var(--text-muted)] mb-4">
+                        Zero-shot voice cloning system using a fine-tuned XTTS v2 model capable of generating natural speech from a 3-second reference audio clip.
+                    </p>
+                    <div class="metric-bar"><div class="metric-fill" style="--fill-width:85%; background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));"></div></div>
+                    <p class="text-xs text-[var(--text-muted)] mt-1 mono">4.12 MOS (mean opinion score)</p>
+                    <div class="mono text-sm flex flex-wrap gap-2 text-[var(--text-muted)] mt-4">
+                        <span class="bg-black/40 px-2 py-1 rounded">XTTS v2</span>
+                        <span class="bg-black/40 px-2 py-1 rounded">PyTorch</span>
+                        <span class="bg-black/40 px-2 py-1 rounded">Gradio</span>
+                        <span class="bg-black/40 px-2 py-1 rounded">GPU</span>
+                    </div>
+                    <a href="project-voice-cloning.html" class="project-link mono">
+                        View full case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+
+                <!-- Project 6: NEW -->
+                <div class="glass-card rounded-lg p-8 group">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold text-white">Medical Image Segmentation</h3>
+                        <span class="mono text-xs px-2 py-1 border border-[var(--accent-cyan)] text-[var(--accent-cyan)] rounded">CV+Med</span>
+                    </div>
+                    <p class="text-[var(--text-muted)] mb-4">
+                        U-Net++ based segmentation model for tumor boundary detection in MRI scans, achieving radiologist-level Dice coefficients on BRATS dataset.
+                    </p>
+                    <div class="metric-bar"><div class="metric-fill" style="--fill-width:91%; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));"></div></div>
+                    <p class="text-xs text-[var(--text-muted)] mt-1 mono">0.91 Dice coefficient</p>
+                    <div class="mono text-sm flex flex-wrap gap-2 text-[var(--text-muted)] mt-4">
+                        <span class="bg-black/40 px-2 py-1 rounded">U-Net++</span>
+                        <span class="bg-black/40 px-2 py-1 rounded">MONAI</span>
+                        <span class="bg-black/40 px-2 py-1 rounded">3D Slicer</span>
+                        <span class="bg-black/40 px-2 py-1 rounded">PyTorch</span>
+                    </div>
+                    <a href="project-medical-imaging.html" class="project-link mono">
+                        View full case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <footer id="contact" class="py-24 px-6 border-t border-white/5 mt-20">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-4">establish connection</h2>
+            <p class="text-[var(--text-muted)] mb-8 mono">> System ready for new data inputs and collaboration protocols.</p>
+            <a href="mailto:ahmed.farouk@example.com" class="mono text-2xl md:text-3xl gradient-text font-bold hover:opacity-80 transition">
+                ahmedmfarouk32@gmail.com
+            </a>
+            <div class="flex justify-center space-x-6 mt-10 mono text-sm text-[var(--text-muted)]">
+                <a href="https://github.com/ahmedfarouk32"target="_blank" class="hover:text-[var(--accent-cyan)] transition">[GitHub]</a>
+                <a href="https://www.linkedin.com/in/ahmed-farouk-07937842b" target="_blank" class="hover:text-[var(--accent-cyan)] transition">[LinkedIn]</a>
+                <a href="#" class="hover:text-[var(--accent-cyan)] transition"></a>
+                <a href="#" class="hover:text-[var(--accent-cyan)] transition"></a>
+            </div>
+            <p class="mt-12 text-xs text-[var(--text-muted)] mono">© 2024 Ahmed Farouk. All neural pathways reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const phrases = ["Computer Vision Engineer", "NLP Specialist", "Machine Learning Architect", "AI Problem Solver", "GenAI Builder"];
+        let currentPhraseIndex = 0, currentCharIndex = 0, isDeleting = false;
+        const typedTextSpan = document.getElementById('typed-text');
+        function typeEffect() {
+            const currentPhrase = phrases[currentPhraseIndex];
+            if (isDeleting) { typedTextSpan.textContent = currentPhrase.substring(0, currentCharIndex - 1); currentCharIndex--; }
+            else { typedTextSpan.textContent = currentPhrase.substring(0, currentCharIndex + 1); currentCharIndex++; }
+            let typeSpeed = isDeleting ? 50 : 100;
+            if (!isDeleting && currentCharIndex === currentPhrase.length) { typeSpeed = 2000; isDeleting = true; }
+            else if (isDeleting && currentCharIndex === 0) { isDeleting = false; currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length; typeSpeed = 500; }
+            setTimeout(typeEffect, typeSpeed);
+        }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        const barObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('animated'); });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('.metric-fill').forEach(el => barObserver.observe(el));
+        window.onload = typeEffect;
+    </script>
+</body>
+</html>

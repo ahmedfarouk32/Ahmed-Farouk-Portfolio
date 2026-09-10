@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Question Answering — Ahmed Farouk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-color:#0a0a0a; --card-bg:rgba(255,255,255,0.03); --accent-cyan:#00f3ff; --accent-purple:#bc13fe; --text-main:#e0e0e0; --text-muted:#8a8a8a; }
+        body { background-color:var(--bg-color); color:var(--text-main); font-family:'Inter',sans-serif; }
+        .mono { font-family:'JetBrains Mono',monospace; }
+        .grid-bg { background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:40px 40px; position:fixed; inset:0; z-index:-1; }
+        .glow-bg { background:radial-gradient(circle at 30% 0%,rgba(188,19,254,0.12),transparent 60%); position:fixed; inset:0; z-index:-1; }
+        .glass-card { background:var(--card-bg); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.05); }
+        .terminal-header { border-bottom:1px solid rgba(255,255,255,0.1); }
+        .dot { width:10px; height:10px; border-radius:50%; }
+        .gradient-text { background:linear-gradient(90deg,var(--accent-cyan),var(--accent-purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        ::-webkit-scrollbar { width:8px; } ::-webkit-scrollbar-track { background:var(--bg-color); } ::-webkit-scrollbar-thumb { background:var(--accent-purple); border-radius:4px; }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="glow-bg"></div>
+
+    <nav class="fixed top-0 w-full z-50 backdrop-blur-md bg-black/30 border-b border-white/5">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="mono text-xl font-bold gradient-text">root@ahmed_ai:~$</a>
+            <a href="index.html#projects" class="mono text-sm text-[var(--text-muted)] hover:text-white transition">← _back_to_projects</a>
+        </div>
+    </nav>
+
+    <header class="pt-32 pb-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="mono text-[var(--accent-purple)] text-sm mb-4">PROJECT_003 // MULTIMODAL AI</div>
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-6">Visual Question Answering</h1>
+            <p class="text-xl text-[var(--text-muted)] max-w-3xl leading-relaxed">
+                A multimodal system that sees images and reads questions — then reasons about both to produce accurate, human-readable answers. Deployed as a microservice on AWS.
+            </p>
+            <div class="flex flex-wrap gap-3 mt-8 mono text-sm">
+                <span class="px-3 py-1 border border-[var(--accent-purple)] text-[var(--accent-purple)] rounded">TensorFlow</span>
+                <span class="px-3 py-1 border border-[var(--accent-purple)] text-[var(--accent-purple)] rounded">BERT</span>
+                <span class="px-3 py-1 border border-[var(--accent-purple)] text-[var(--accent-purple)] rounded">ResNet-152</span>
+                <span class="px-3 py-1 border border-[var(--accent-purple)] text-[var(--accent-purple)] rounded">Docker</span>
+                <span class="px-3 py-1 border border-[var(--accent-purple)] text-[var(--accent-purple)] rounded">AWS</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="glass-card rounded-lg p-6 text-center"><div class="text-3xl font-extrabold gradient-text">72%</div><div class="mono text-xs text-[var(--text-muted)] mt-2">VQA Accuracy</div></div>
+            <div class="glass-card rounded-lg p-6 text-center"><div class="text-3xl font-extrabold gradient-text">340ms</div><div class="mono text-xs text-[var(--text-muted)] mt-2">End-to-End Latency</div></div>
+            <div class="glass-card rounded-lg p-6 text-center"><div class="text-3xl font-extrabold gradient-text">85M</div><div class="mono text-xs text-[var(--text-muted)] mt-2">Parameters</div></div>
+            <div class="glass-card rounded-lg p-6 text-center"><div class="text-3xl font-extrabold gradient-text">99.9%</div><div class="mono text-xs text-[var(--text-muted)] mt-2">API Uptime</div></div>
+        </div>
+    </section>
+
+    <!-- Demo -->
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8">_interactive_example</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass-card rounded-lg overflow-hidden">
+                    <img src="https://picsum.photos/seed/vqa-kitchen/600/400.jpg" alt="Sample VQA Image" class="w-full h-64 object-cover">
+                    <div class="p-4 mono text-sm text-[var(--text-muted)]">INPUT: RGB Image (224×224)</div>
+                </div>
+                <div class="glass-card rounded-lg p-8 flex flex-col justify-center">
+                    <div class="mono text-sm mb-4">
+                        <span class="text-[var(--accent-purple)]">Q:</span> <span class="text-white">"What color is the cup on the counter?"</span>
+                    </div>
+                    <div class="w-full h-px bg-white/10 my-4"></div>
+                    <div class="mono text-sm">
+                        <span class="text-[var(--accent-cyan)]">A:</span> <span class="text-green-400 text-lg font-bold">"Red"</span>
+                    </div>
+                    <div class="mt-6 mono text-xs text-[var(--text-muted)]">
+                        Confidence: 0.94 | Attention map: cup_region (0.82), counter (0.12), background (0.06)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8">_model_architecture</h2>
+            <div class="glass-card rounded-lg overflow-hidden">
+                <div class="terminal-header flex items-center space-x-2 px-4 py-3 bg-black/40">
+                    <div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div>
+                    <span class="mono text-xs text-[var(--text-muted)] ml-2">model_arch.py</span>
+                </div>
+                <pre class="p-6 mono text-sm leading-relaxed overflow-x-auto"><code><span class="text-[var(--accent-purple)]">class</span> <span class="text-[var(--accent-cyan)]">VQAModel</span>(tf.keras.Model):
+    <span class="text-[var(--accent-purple)]">def</span> <span class="text-white">__init__</span>(self, num_answers=<span class="text-orange-400">3129</span>):
+        <span class="text-[var(--accent-purple)]">super</span>().__init__()
+        <span class="text-[var(--text-muted)]"># Vision encoder — pretrained ResNet-152</span>
+        self.vision_encoder = tf.keras.applications.<span class="text-[var(--accent-cyan)]">ResNet152</span>(
+            weights=<span class="text-green-400">'imagenet'</span>, include_top=<span class="text-orange-400">False</span>,
+            pooling=<span class="text-green-400">'avg'</span>)
+        self.vision_proj = tf.keras.layers.<span class="text-[var(--accent-cyan)]">Dense</span>(<span class="text-orange-400">768</span>)
+        
+        <span class="text-[var(--text-muted)]"># Text encoder — pretrained BERT-base</span>
+        self.text_encoder = TFBertModel.from_pretrained(
+            <span class="text-green-400">'bert-base-uncased'</span>)
+        
+        <span class="text-[var(--text-muted)]"># Multimodal fusion</span>
+        self.attention = <span class="text-[var(--accent-cyan)]">MultiHeadAttention</span>(num_heads=<span class="text-orange-400">8</span>, key_dim=<span class="text-orange-400">64</span>)
+        self.classifier = tf.keras.layers.<span class="text-[var(--accent-cyan)]">Dense</span>(num_answers, <span class="text-green-400">'softmax'</span>)
+
+    <span class="text-[var(--accent-purple)]">def</span> <span class="text-white">call</span>(self, image, input_ids, attention_mask):
+        v = self.vision_proj(self.vision_encoder(image))
+        t = self.text_encoder(input_ids, attention_mask=attention_mask).last_hidden_state
+        fused = self.attention(t, v)
+        <span class="text-[var(--accent-purple)]">return</span> self.classifier(fused[:, <span class="text-orange-400">0</span>, :])</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 px-6 border-t border-white/5">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="project-anomaly-detection.html" class="mono text-sm text-[var(--text-muted)] hover:text-white transition">← Anomaly Detection</a>
+            <a href="project-sentiment-dashboard.html" class="mono text-sm text-[var(--accent-cyan)] hover:opacity-80 transition">Next: Sentiment Dashboard →</a>
+        </div>
+    </section>
+    <footer class="py-8 px-6 border-t border-white/5"><div class="max-w-6xl mx-auto text-center"><p class="text-xs text-[var(--text-muted)] mono">© 2024 Ahmed Farouk. All neural pathways reserved.</p></div></footer>
+</body>
+</html>
